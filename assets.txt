@@ -1,0 +1,9 @@
+lvlsquad.github.io/
+├── index.html
+├── assets/
+│   ├── css/
+│   │   └── styles.css
+│   └── js/
+│       └── main.js
+└── img/
+    └── og-cover.png   (tu imagen social / lo que quieras)
