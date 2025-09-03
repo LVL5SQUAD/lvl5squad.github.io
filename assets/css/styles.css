@@ -167,17 +167,14 @@ body{
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .musica img:hover {
   transform: scale(1.05);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
 }
-
 .musica .section-content {
   align-items: center;
   gap: 40px;
 }
-
 
 /* Contacto */
 .contacto{
