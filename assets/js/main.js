@@ -51,12 +51,11 @@ async function updateLiveUI() {
         typeof viewers === 'number' ? `👀 Viewers: ${viewers}` : '';
 
       // Mostrar embed
+      // Mostrar embed
       liveEmbed.style.display = 'block';
       liveEmbed.innerHTML = `
         <iframe
-          src="https://player.twitch.tv/?channel=${encodeURIComponent(
-            channel
-          )}&parent=levelfivesquad.com.ar&muted=true"
+          src="https://player.twitch.tv/?channel=${encodeURIComponent(user || 'lvl5squad')}&parent=levelfivesquad.com.ar&muted=true"
           height="300"
           width="100%"
           frameborder="0"
@@ -64,6 +63,7 @@ async function updateLiveUI() {
           allowfullscreen="true">
         </iframe>
       `;
+
     } else {
       // 📴 OFFLINE
       livePill.classList.remove('live');
