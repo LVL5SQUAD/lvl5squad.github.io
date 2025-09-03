@@ -71,22 +71,38 @@
 
     <main id="top">
       <section class="hero">
-        <div>
-          <span class="pill">Comunidad gamer • Argentina</span>
-          <h1>Gaming, humor y comunidad: ¡bienvenidos a LVL5!</h1>
-          <p>Streams, clips, música original y series con estética pixel-art. Unite al Discord para sumarte a eventos, sorteos y partidas con el squad.</p>
-          <div class="cta">
-            <a class="btn btn-brand" target="_blank" rel="noopener" href="https://discord.com/invite/vU77MfjyAa">Unirme al Discord</a>
-            <a class="btn btn-accent" target="_blank" rel="noopener" href="https://www.youtube.com/@LVL5Squad">YouTube</a>
-            <a class="btn" target="_blank" rel="noopener" href="https://www.tiktok.com/@lvl5squad">TikTok</a>
-          </div>
-        </div>
-        <div class="card">
-          <div class="pill live" aria-live="polite">En vivo (si estamos)</div>
-          <p class="muted" style="margin:.6rem 0 1rem">Seguinos en Twitch y activá notificaciones.</p>
-          <a class="btn btn-brand" style="width:100%;text-align:center" target="_blank" rel="noopener" href="https://twitch.tv/lvl5squad">Abrir Twitch</a>
-        </div>
-      </section>
+  <div>
+    <span class="pill">Comunidad gamer • Argentina</span>
+    <h1>Gaming, humor y comunidad: ¡bienvenidos a LVL5!</h1>
+    <p>Streams, clips, música original y series con estética pixel-art. Unite al Discord para sumarte a eventos, sorteos y partidas con el squad.</p>
+    <div class="cta">
+      <a class="btn btn-brand" target="_blank" href="https://discord.com/invite/vU77MfjyAa">Unirme al Discord</a>
+      <a class="btn btn-accent" target="_blank" href="https://www.youtube.com/@LVL5Squad">YouTube</a>
+      <a class="btn" target="_blank" href="https://www.tiktok.com/@lvl5squad">TikTok</a>
+    </div>
+  </div>
+
+  <!-- Card de estado -->
+  <div class="card" id="liveCard">
+    <div class="pill live" id="livePill">En vivo (si estamos)</div>
+    <p class="muted" id="liveNote" style="margin:.6rem 0 1rem">Seguinos en Twitch y activá notificaciones.</p>
+
+    <!-- Info dinámica -->
+    <div id="liveInfo" style="display:none; margin-bottom:.75rem;">
+      <strong id="liveTitle"></strong>
+      <div class="muted" id="liveViewers" style="margin-top:.25rem;"></div>
+    </div>
+
+    <!-- Embed cuando estamos en vivo -->
+    <div id="liveEmbed" style="display:none; margin-top:.5rem; border-radius:12px; overflow:hidden;">
+      <!-- el embed lo inyectamos desde JS -->
+    </div>
+
+    <a class="btn btn-brand" id="twitchBtn" style="width:100%;text-align:center" target="_blank"
+       href="https://twitch.tv/lvl5squad">Abrir Twitch</a>
+  </div>
+</section>
+
 
       <section id="nosotros" class="card" style="margin-top:8px">
         <h2 style="margin-top:0">¿Quiénes somos?</h2>

@@ -32,6 +32,19 @@ body{
   outline:2px solid #3153ff55; box-shadow:0 0 0 3px #6ad1ff22;
 }
 
+/* Estado en vivo */
+.is-live #livePill {
+  color: #fff;
+  border-color: #ff2d55;
+  background: linear-gradient(180deg,#3a0b18,#2a0a12);
+  box-shadow: 0 0 0 3px #ff2d5533, 0 0 16px #ff2d5588;
+}
+.is-live #twitchBtn {
+  border-color: #ff2d55;
+  box-shadow: 0 0 0 2px #ff2d5533;
+}
+
+
 nav{display:flex;gap:12px;flex-wrap:wrap}
 .btn{
   padding:10px 14px;border-radius:12px;background:#1b1e29;
