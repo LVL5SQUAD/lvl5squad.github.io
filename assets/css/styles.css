@@ -212,7 +212,7 @@ body{
 }
 .musica img:hover {
   transform: scale(1.05);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
 }
 .musica .section-content {
   align-items: center;
@@ -261,4 +261,16 @@ footer{
   .cards .card-grid{ grid-template-columns: 1fr; }
   .nav-links{ gap:6px; flex-wrap:wrap; }
   .nav-links a{ padding:7px 10px; }
+}
+
+/* ---- Puntito rojo en botón Twitch ---- */
+.btn-twitch[data-live="1"]::after {
+  content:"";
+  width:8px;
+  height:8px;
+  margin-left:8px;
+  border-radius:999px;
+  background: var(--rojo);
+  box-shadow: 0 0 10px rgba(255,91,91,.8);
+  display:inline-block;
 }
