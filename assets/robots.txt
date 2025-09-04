@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://levelfivesquad.com.ar/sitemap.xml

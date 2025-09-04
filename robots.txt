@@ -1,0 +1,9 @@
+# robots.txt — LVL5 Squad
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://levelfivesquad.com.ar/sitemap.xml
+
+# (Opcional) Indica el host preferido
+Host: levelfivesquad.com.ar
