@@ -3,53 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LVL5 Squad - Gaming y Comunidad</title>
+  <title>LVL5 Squad — Gaming y Comunidad</title>
 
-  <!-- Canonical -->
+  <!-- Descripción / SEO -->
+  <meta name="description" content="Gaming, humor, música y comunidad con estética anime. Unite al LVL5 Squad." />
   <link rel="canonical" href="https://levelfivesquad.com.ar/" />
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/logo.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="assets/img/logo-512.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/logo-512.png">
-  <meta name="theme-color" content="#0b0f14">
-
-  <!-- Robots -->
-  <meta name="robots" content="index,follow,max-image-preview:large">
-  <meta name="googlebot" content="index,follow">
-
-  <!-- Primary Meta -->
-  <meta name="title" content="LVL5 Squad - Gaming y Comunidad">
-  <meta name="description" content="Gaming, humor, música y comunidad con estética anime. Sumate al LVL5.">
+  <meta name="theme-color" content="#111723" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="LVL5 Squad - Gaming y Comunidad">
-  <meta property="og:description" content="Gaming, humor, música y comunidad con estética anime. Sumate al LVL5.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://levelfivesquad.com.ar/">
-  <meta property="og:site_name" content="LVL5 Squad">
-  <meta property="og:locale" content="es_AR">
-  <meta property="og:image" content="https://levelfivesquad.com.ar/assets/img/og-cover.png">
-  <meta property="og:image:secure_url" content="https://levelfivesquad.com.ar/assets/img/og-cover.png">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="LVL5 Squad - Gaming y Comunidad">
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://levelfivesquad.com.ar/" />
+  <meta property="og:title" content="LVL5 Squad — Gaming y Comunidad" />
+  <meta property="og:description" content="Streaming, clips, música y series con estética anime. Sumate al LVL5." />
+  <meta property="og:image" content="assets/img/og-cover.png" />
 
   <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="LVL5 Squad - Gaming y Comunidad">
-  <meta name="twitter:description" content="Gaming, humor, música y comunidad con estética anime. Sumate al LVL5.">
-  <meta name="twitter:image" content="https://levelfivesquad.com.ar/assets/img/og-cover.png">
-  <meta name="twitter:image:alt" content="LVL5 Squad - Gaming y Comunidad">
-  <meta name="twitter:site" content="@LVL5SQUAD">
-  <meta name="twitter:creator" content="@LVL5SQUAD">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="LVL5 Squad — Gaming y Comunidad" />
+  <meta name="twitter:description" content="Streaming, clips, música y series con estética anime. Sumate al LVL5." />
+  <meta name="twitter:image" content="assets/img/og-cover.png" />
 
-  <!-- Alternate hreflang -->
-  <link rel="alternate" href="https://levelfivesquad.com.ar/" hreflang="es-ar">
-  <link rel="alternate" href="https://levelfivesquad.com.ar/" hreflang="es">
+  <!-- Favicon / Logo -->
+  <link rel="icon" type="image/png" href="assets/img/logo.png" />
+  <link rel="apple-touch-icon" href="assets/img/logo-512.png" />
 
-  <!-- Structured Data -->
+  <!-- Datos estructurados -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -65,13 +43,13 @@
       "https://kick.com/lvl5squad",
       "https://social.tunecore.com/linkShare?linkid=2VHth4wOu0rPGpYlQ_t1gA"
     ],
-    "contactPoint": {
+    "contactPoint": [{
       "@type": "ContactPoint",
-      "email": "divestudios.esin@prefecturanaval.edu.ar",
+      "email": "contacto@levelfivesquad.com.ar",
       "contactType": "customer support",
       "areaServed": "AR",
       "availableLanguage": ["es"]
-    }
+    }]
   }
   </script>
 
@@ -92,7 +70,9 @@
       <a href="#contenido">Contenido</a>
       <a href="#musica">Música</a>
       <a href="#contacto">Contacto</a>
-      <a class="btn btn-violeta btn-twitch" target="_blank" rel="noopener" href="https://twitch.tv/lvl5squad">Ver Twitch</a>
+      <a class="btn btn-violeta btn-twitch" target="_blank" rel="noopener" href="https://twitch.tv/lvl5squad">
+        Ver Twitch <span id="status-nav" class="status-badge">●</span>
+      </a>
     </nav>
   </header>
 
@@ -103,13 +83,20 @@
       <p>Streaming, clips, música y series con estética anime. Unite al squad y viví el LVL5.</p>
 
       <div class="hero-buttons">
-        <a class="btn btn-blanco" target="_blank" rel="noopener" href="https://youtu.be/CmF5iHqk6Qk">YouTube</a>
+        <a class="btn btn-blanco" target="_blank" rel="noopener" href="https://youtube.com/@LVL5SQUAD">YouTube</a>
         <a class="btn btn-verde" target="_blank" rel="noopener" href="https://social.tunecore.com/linkShare?linkid=2VHth4wOu0rPGpYlQ_t1gA">Escuchar en TuneCore</a>
+      </div>
+
+      <!-- Estado Twitch (detalle) -->
+      <div class="twitch-status" id="status-hero">
+        <span class="badge" id="status-hero-badge">Offline</span>
+        <p>Seguinos en Twitch y activá notificaciones.</p>
+        <a class="btn btn-azul" target="_blank" rel="noopener" href="https://twitch.tv/lvl5squad">Abrir Twitch</a>
       </div>
     </div>
 
     <div class="hero-image">
-      <img src="assets/img/hero-placeholder.png" alt="Arte hero LVL5" />
+      <img src="assets/img/hero-placeholder.png" alt="Arte principal LVL5 Squad" />
     </div>
   </section>
 
@@ -118,7 +105,8 @@
     <div class="section-content">
       <div>
         <h2 id="titulo-comunidad">¿Quiénes somos?</h2>
-        <p>Somos cinco amigos creando contenido gamer y de humor con estética anime. Buscamos una comunidad participativa donde <strong>tu interacción</strong> es el LVL5.</p>
+        <p>Somos cinco amigos creando contenido gamer y de humor con estética anime. Buscamos una comunidad
+           participativa donde <strong>tu interacción</strong> es el LVL5.</p>
         <div class="pill-row">
           <span class="pill">Comunidad gamer</span>
           <span class="pill">Argentina</span>
@@ -158,7 +146,7 @@
 
     <div class="chip-row">
       <a class="chip chip-verde" target="_blank" rel="noopener" href="https://kick.com/lvl5squad">Kick</a>
-      <a class="chip chip-azul" target="_blank" rel="noopener" href="https://facebook.com/level-five-squad">Facebook</a>
+      <a class="chip chip-azul"  target="_blank" rel="noopener" href="https://facebook.com/level-five-squad">Facebook</a>
     </div>
   </section>
 
@@ -169,7 +157,7 @@
         <h2 id="titulo-musica">Música</h2>
         <p>Escuchá <strong>“5 Caminos”</strong> y otras creaciones originales del squad.</p>
         <div class="hero-buttons">
-          <a class="btn btn-blanco" target="_blank" rel="noopener" href="https://youtu.be/CmF5iHqk6Qk">YouTube</a>
+          <a class="btn btn-blanco" target="_blank" rel="noopener" href="https://youtube.com/@LVL5SQUAD">YouTube</a>
           <a class="btn btn-verde" target="_blank" rel="noopener" href="https://social.tunecore.com/linkShare?linkid=2VHth4wOu0rPGpYlQ_t1gA">Escuchar en TuneCore</a>
         </div>
       </div>
@@ -182,12 +170,19 @@
     <div class="section-content contacto">
       <h2 id="titulo-contacto">Contacto</h2>
       <p>¿Querés colaborar, sponsorear o sumarte al equipo? Escribinos.</p>
-      <a class="btn btn-bordo" href="mailto:divestudios.esin@prefecturanaval.edu.ar">Enviar email</a>
+      <a class="btn btn-bordo" href="mailto:contacto@levelfivesquad.com.ar">Enviar email</a>
     </div>
   </section>
 
   <footer>
     <p>© 2025 LVL5 Squad — Hecho con ❤️ en Argentina</p>
   </footer>
+
+  <!-- Config opcional para el JS (por si la necesitás) -->
+  <script>
+    window.LVL5 = { TWITCH_STATUS_URL: "/api/twitch/status" };
+  </script>
+  <!-- JS principal (incluye la verificación de Twitch) -->
+  <script src="assets/js/main.js" defer></script>
 </body>
 </html>
