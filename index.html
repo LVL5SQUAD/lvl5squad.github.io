@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LVL5 Squad — Gaming y Comunidad</title>
 
-  <!-- Descripción / SEO -->
+  <!-- SEO básico -->
   <meta name="description" content="Gaming, humor, música y comunidad con estética anime. Unite al LVL5 Squad." />
   <link rel="canonical" href="https://levelfivesquad.com.ar/" />
   <meta name="theme-color" content="#111723" />
@@ -15,17 +15,17 @@
   <meta property="og:url" content="https://levelfivesquad.com.ar/" />
   <meta property="og:title" content="LVL5 Squad — Gaming y Comunidad" />
   <meta property="og:description" content="Streaming, clips, música y series con estética anime. Sumate al LVL5." />
-  <meta property="og:image" content="assets/img/og-cover.png" />
+  <meta property="og:image" content="/assets/img/og-cover.png" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="LVL5 Squad — Gaming y Comunidad" />
   <meta name="twitter:description" content="Streaming, clips, música y series con estética anime. Sumate al LVL5." />
-  <meta name="twitter:image" content="assets/img/og-cover.png" />
+  <meta name="twitter:image" content="/assets/img/og-cover.png" />
 
   <!-- Favicon / Logo -->
-  <link rel="icon" type="image/png" href="assets/img/logo.png" />
-  <link rel="apple-touch-icon" href="assets/img/logo-512.png" />
+  <link rel="icon" type="image/png" href="/assets/img/logo.png" />
+  <link rel="apple-touch-icon" href="/assets/img/logo-512.png" />
 
   <!-- Datos estructurados -->
   <script type="application/ld+json">
@@ -53,15 +53,15 @@
   }
   </script>
 
-  <!-- CSS principal -->
-  <link rel="stylesheet" href="assets/css/styles.css" />
+  <!-- CSS principal (cache-busting) -->
+  <link rel="stylesheet" href="/assets/css/styles.css?v=2025-09-03-1" />
 </head>
 
 <body>
   <!-- HEADER -->
   <header class="site-header">
     <div class="logo">
-      <img src="assets/img/logo.png" alt="Logo LVL5 Squad" />
+      <img src="/assets/img/logo.png" alt="Logo LVL5 Squad" />
       <span>LVL5 Squad</span>
     </div>
 
@@ -96,7 +96,7 @@
     </div>
 
     <div class="hero-image">
-      <img src="assets/img/hero-placeholder.png" alt="Arte principal LVL5 Squad" />
+      <img src="/assets/img/hero-placeholder.png" alt="Arte principal LVL5 Squad" />
     </div>
   </section>
 
@@ -113,7 +113,7 @@
           <span class="pill">Anime</span>
         </div>
       </div>
-      <img src="assets/img/comunidad.png" alt="Integrantes del Squad LVL5" />
+      <img src="/assets/img/comunidad.png" alt="Integrantes del Squad LVL5" />
     </div>
   </section>
 
@@ -123,21 +123,21 @@
 
     <div class="card-grid">
       <article class="card">
-        <img src="assets/img/twitch.png" alt="Canal de Twitch" />
+        <img src="/assets/img/twitch.png" alt="Canal de Twitch" />
         <h3>Twitch</h3>
         <p>Streams en vivo y eventos con la comunidad.</p>
         <a class="btn btn-violeta" target="_blank" rel="noopener" href="https://twitch.tv/lvl5squad">Ver canal</a>
       </article>
 
       <article class="card">
-        <img src="assets/img/youtube.png" alt="Canal de YouTube" />
+        <img src="/assets/img/youtube.png" alt="Canal de YouTube" />
         <h3>YouTube</h3>
         <p>Clips, VODs, resubidos y series originales del squad.</p>
         <a class="btn btn-rojo" target="_blank" rel="noopener" href="https://youtube.com/@LVL5SQUAD">Ver canal</a>
       </article>
 
       <article class="card">
-        <img src="assets/img/tiktok.png" alt="Perfil de TikTok" />
+        <img src="/assets/img/tiktok.png" alt="Perfil de TikTok" />
         <h3>TikTok</h3>
         <p>Shorts, trends y humor gaming.</p>
         <a class="btn btn-azul" target="_blank" rel="noopener" href="https://tiktok.com/@lvl5squad">Ver canal</a>
@@ -161,7 +161,7 @@
           <a class="btn btn-verde" target="_blank" rel="noopener" href="https://social.tunecore.com/linkShare?linkid=2VHth4wOu0rPGpYlQ_t1gA">Escuchar en TuneCore</a>
         </div>
       </div>
-      <img src="assets/img/tunecore_share.png" alt="Escuchar 5 Caminos en TuneCore" />
+      <img src="/assets/img/tunecore_share.png" alt="Escuchar 5 Caminos en TuneCore" />
     </div>
   </section>
 
@@ -178,11 +178,13 @@
     <p>© 2025 LVL5 Squad — Hecho con ❤️ en Argentina</p>
   </footer>
 
-  <!-- Config opcional para el JS (por si la necesitás) -->
+  <!-- Config para JS -->
   <script>
+    // Endpoint del Worker de Cloudflare que ya tenés:
     window.LVL5 = { TWITCH_STATUS_URL: "/api/twitch/status" };
   </script>
-  <!-- JS principal (incluye la verificación de Twitch) -->
-  <script src="assets/js/main.js" defer></script>
+
+  <!-- JS principal (cache-busting) -->
+  <script src="/assets/js/main.js?v=2025-09-03-1" defer></script>
 </body>
 </html>
