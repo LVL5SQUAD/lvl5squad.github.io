@@ -68,6 +68,29 @@ body{
 }
 .nav-links a:hover{ background: rgba(255,255,255,.06); border-color: var(--bordes); }
 
+/* ---- Mini badge “en vivo” en NAVBAR ---- */
+.status-badge{
+  font-size:.85rem;
+  margin-left:6px;
+  font-weight:800;
+  line-height:1;
+  vertical-align:middle;
+  transition: color .2s ease, text-shadow .2s ease;
+}
+.status-badge.online{
+  color: var(--rojo);
+  text-shadow: 0 0 10px rgba(224,67,67,.65);
+  animation: pulseLive 1.6s ease-in-out infinite;
+}
+.status-badge.offline{
+  color:#6b7280;
+  text-shadow:none;
+}
+@keyframes pulseLive{
+  0%,100%{ text-shadow: 0 0 4px rgba(224,67,67,.6), 0 0 0 rgba(224,67,67,0); }
+  50%    { text-shadow: 0 0 8px rgba(224,67,67,.9), 0 0 18px rgba(224,67,67,.35); }
+}
+
 /* ---- Hero ---- */
 .hero{
   max-width:1100px; margin:0 auto;
@@ -94,6 +117,26 @@ body{
   padding:16px;
 }
 .hero-image img{ width:100%; height:auto; border-radius:12px; opacity:.95; }
+
+/* ---- Bloque estado Twitch en HERO ---- */
+.twitch-status{
+  border:1px solid var(--bordes);
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding:16px;
+  max-width:320px;
+  margin-top:12px;
+}
+.twitch-status .badge{
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:.92rem;
+  margin-bottom:10px;
+}
+.badge.online{ background: var(--rojo); color:#fff; }
+.badge.offline{ background:#3b4454; color:#c7cfdb; }
 
 /* ---- Secciones ---- */
 .section{ padding:36px 20px; }
