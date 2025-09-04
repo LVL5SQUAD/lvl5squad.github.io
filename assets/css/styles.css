@@ -274,3 +274,66 @@ footer{
   box-shadow: 0 0 10px rgba(255,91,91,.8);
   display:inline-block;
 }
+
+/* =========================
+   HOTFIX PROD 2025-09-04-1
+   ========================= */
+
+/* 2.1 – Imágenes por defecto (seguras) */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 2.2 – HERO: recorte y altura máxima */
+.hero-image {
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  max-height: 440px;     /* control de altura */
+}
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* recorta sin deformar */
+}
+
+/* 2.3 – Cards: que ninguna imagen se “escape” */
+.card img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  /* si tus banners vinieran MUY altos, activa el “crop”:
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  */
+}
+
+/* 2.4 – Sección Comunidad: que la imagen siempre quede dentro */
+#comunidad .section-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* 2.5 – Música (TuneCore): tamaño controlado SIEMPRE */
+#musica .section-content img {
+  width: 100%;
+  max-width: 320px;     /* subí/bajá si querés 280–360 */
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.4);
+}
+
+/* 2.6 – Bloque Twitch en el hero */
+.twitch-status { max-width: 360px; }
+#liveEmbed iframe { border-radius: 10px; overflow: hidden; }
+
+/* 2.7 – Contenedores: ancho tope consistente */
+.section .section-content,
+.cards { max-width: 1100px; margin: 0 auto; }
+
+/* 2.8 – Ajuste tipográfico de h1 para que no empuje layout */
+.hero-text h1 { word-break: normal; overflow-wrap: anywhere; }
+
