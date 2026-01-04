@@ -19,6 +19,8 @@
   --verde-2: #61e536;
   --rojo:    #e04343;
   --rojo-2:  #ff5b5b;
+  --rosa: #ff66ad;
+  --gris: #6b7280;
 
   --card:   #131a26;
   --bordes: rgba(255,255,255,.10);
@@ -256,9 +258,11 @@ body{
 .btn-bordo  { background: linear-gradient(180deg, var(--bordo-2), var(--bordo)); color:#fff; }
 .btn-violeta{ background: linear-gradient(180deg, var(--violeta), var(--violeta-2)); color:#fff; }
 .btn-azul   { background: linear-gradient(180deg, var(--azul), var(--azul-2)); color:#fff; }
-.btn-verde  { background: linear-gradient(180deg, var(--verde-2), var(--verde)); color:#072a08; }
+.btn-verde  { background: linear-gradient(180deg, var(--verde-2), var(--verde)); color:#ffffff; }
 .btn-rojo   { background: linear-gradient(180deg, var(--rojo-2), var(--rojo)); color:#fff; }
 .btn-blanco { background:#fff; color:#0f1520; border-color: rgba(0,0,0,.08); }
+.btn-gris   { background: var(--gris); color:#fff; border-color: rgba(0,0,0,.08); }
+.btn-rosa  { background: var(--rosa); color:#fff; border-color: rgba(0,0,0,.08); }
 
 /* ---- Footer ---- */
 footer{
