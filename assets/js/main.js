@@ -83,7 +83,7 @@ async function updateLiveUI() {
       livePill?.classList.add('live');
       liveCard?.classList.add('is-live');
 
-      if (livePill)   livePill.textContent = '🔴 En vivo ahora';
+      if (livePill)   livePill.textContent = '🔴 EN VIVO AHORA';
       if (liveNote)   liveNote.textContent = '¡Entrá al stream!';
       if (liveInfo)   liveInfo.style.display = 'block';
       if (liveTitle)  liveTitle.textContent = title || 'Transmitiendo en Twitch';
