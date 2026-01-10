@@ -26,6 +26,11 @@ function setLiveVisualState(isLive){
   document.body.classList.toggle('is-live', isLive);
 }
 
+// Decide quién manda la estética
+function resolveVisualLiveState(realLive){
+  return SIMULATE_LIVE ? true : realLive;
+}
+
 // =====================================================
 // TWITCH LIVE STATUS (REAL)
 // =====================================================
@@ -46,8 +51,9 @@ async function updateLiveUI() {
 
     if (twitchBtn) twitchBtn.href = `https://twitch.tv/${channel}`;
 
-    // 🎨 Estado visual
-    setLiveVisualState(live);
+    // 🎨 Estado visual seguro
+    const visualLive = resolveVisualLiveState(live);
+    setLiveVisualState(visualLive);
 
     if (live) {
       livePill.textContent = '🔴 EN VIVO AHORA';
@@ -55,12 +61,14 @@ async function updateLiveUI() {
       liveCard.classList.add('is-live');
       liveNote.textContent = '¡Entrá al stream!';
       viewerEl.textContent = viewers ?? 0;
+      autoOpenChatIfLive(true);
     } else {
       livePill.textContent = 'Offline';
       livePill.classList.remove('live');
       liveCard.classList.remove('is-live');
       liveNote.textContent = 'Seguinos en Twitch y activá notificaciones.';
       viewerEl.textContent = 0;
+      autoOpenChatIfLive(false);
     }
 
   } catch (err) {
@@ -167,6 +175,20 @@ chatClose?.addEventListener('click', () => {
 });
 
 // =====================================================
+// AUTO-OPEN DEL CHAT CUANDO ESTÁ EN VIVO
+// =====================================================
+
+function autoOpenChatIfLive(isLive){
+  if (!isLive) return;
+  if (sessionStorage.getItem('chatOpened')) return;
+
+  setTimeout(() => {
+    chatPanel?.classList.add('open');
+    sessionStorage.setItem('chatOpened', '1');
+  }, 1200);
+}
+
+// =====================================================
 // CUENTA REGRESIVA EVENTO
 // =====================================================
 
@@ -177,12 +199,11 @@ const m = document.getElementById("cdMinutes");
 const s = document.getElementById("cdSeconds");
 const eventAlert = document.getElementById("eventAlert");
 
-function updateCountdown() {
+function updateCountdown(){
   const diff = eventDate - Date.now();
 
   if (diff <= 0) {
-    document.getElementById("countdown").innerHTML =
-      "<strong>¡ES AHORA!</strong>";
+    document.getElementById("countdown").innerHTML = "<strong>¡ES AHORA!</strong>";
     eventAlert.classList.add("urgent");
     return;
   }
@@ -192,7 +213,6 @@ function updateCountdown() {
   m.textContent = Math.floor(diff / 60000) % 60;
   s.textContent = Math.floor(diff / 1000) % 60;
 
-  // Modo urgente últimos 10 minutos
   eventAlert.classList.toggle("urgent", diff <= 10 * 60 * 1000);
 }
 
