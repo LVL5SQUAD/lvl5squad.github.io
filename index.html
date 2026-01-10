@@ -2,189 +2,107 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="LVL5 Squad es una comunidad gamer argentina con streaming, humor, música y estética anime. Sumate al squad y viví el LVL5." />
-
-  <title>LVL5 Squad - Gaming y Comunidad</title>
-
-  <!-- CSS principal -->
-  <link rel="stylesheet" href="assets/css/styles.css?v=2025.09.04.1" />
-  <script defer src="assets/js/main.js?v=2025.09.04.1"></script>
-
-  <!-- Favicon / Logo -->
-  <link rel="icon" type="image/png" href="assets/img/logo.png" />
-
-  <!-- Open Graph / Twitter -->
-  <meta property="og:title" content="LVL5 Squad - Gaming y Comunidad" />
-  <meta property="og:description" content="Gaming, humor, música y comunidad con estética anime. Sumate al LVL5." />
-  <meta property="og:image" content="assets/img/og-cover.png" />
-  <meta property="og:url" content="https://levelfivesquad.com.ar/" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LVL5 Squad</title>
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
 <body>
-  <!-- HEADER -->
-  <header class="site-header">
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+
+  <nav class="navbar">
     <div class="logo">
-      <a href="/" class="logo">
-      <img src="assets/img/logo.png" alt="Logo LVL5 Squad" />
-        <span>LVL5 Squad</span>
-      </a>
+      <img src="/assets/img/logo.png" alt="LVL5">
+      <span>LVL5 Squad</span>
     </div>
 
-    <nav class="nav-links">
-      <a href="#comunidad">Comunidad</a>
-      <a href="#contenido">Contenido</a>
-      <a href="#musica">Música</a>
-      <a href="#contacto">Contacto</a>
-      <a class="btn btn-violeta btn-twitch" target="_blank" rel="noopener" href="https://twitch.tv/lvl5squad">Ver Twitch</a>
-    </nav>
-  </header>
-<main>
+    <div class="nav-links">
+      <a href="#links">Links</a>
+      <a href="#music">Música</a>
+      <a class="btn btn-violeta" href="#">Twitch</a>
+    </div>
+  </nav>
+
+  <div class="header-banner">
+    <div class="banner-overlay"></div>
+  </div>
+
+</header>
+
+<!-- ================= MAIN ================= -->
+<main class="container">
+
   <!-- HERO -->
-  <section class="hero" aria-label="Portada LVL5">
-    <div class="hero-text">
-      <h1>Gaming, humor y comunidad</h1>
-      <p>Streaming, clips, música y series con estética anime. Unite al squad y viví el LVL5.</p>
+  <section class="hero">
+   <h1>Gaming, humor y <span>comunidad</span></h1>
+    <p>Streaming, clips y música original con estética anime.</p>
 
-      <div class="hero-buttons">
-        <a class="btn btn-blanco" target="_blank" rel="noopener" href="https://youtu.be/CmF5iHqk6Qk">YouTube</a>
-        <a class="btn btn-verde" target="_blank" rel="noopener" href="https://social.tunecore.com/linkShare?linkid=2VHth4wOu0rPGpYlQ_t1gA">Escuchar en TuneCore</a>
-      </div>
-
-      <!-- Estado en vivo -->
-      <div id="live-status" class="live-box">
-        <span class="status-text">Cargando estado...</span>
-        <a class="btn btn-azul" target="_blank" rel="noopener" href="https://twitch.tv/lvl5squad">Abrir Twitch</a>
-      </div>
-    </div>
-
-    <div class="hero-image">
-      <img src="assets/img/hero-placeholder.png" alt="Arte principal LVL5 Squad" />
-    </div>
-  </section>
-</main>
-
-  <!-- COMUNIDAD -->
-  <section id="comunidad" class="section" aria-labelledby="titulo-comunidad">
-    <div class="section-content">
-      <div>
-        <h2 id="titulo-comunidad">¿Quiénes somos?</h2>
-        <p>Somos cinco amigos creando contenido gamer y de humor con estética anime. Buscamos una comunidad
-           participativa donde <strong>tu interacción</strong> es el LVL5.</p>
-        <div class="pill-row">
-          <span class="pill">Comunidad gamer</span>
-          <span class="pill">Argentina</span>
-          <span class="pill">Anime</span>
-        </div>
-      </div>
-      <img src="assets/img/comunidad.png" alt="Integrantes del Squad LVL5" />
+    <div id="liveCard" class="lvl5-card">
+      <span id="livePill">Offline</span>
+      <p class="text-dim small">Seguinos en Twitch y activá notificaciones.</p>
     </div>
   </section>
 
-  <!-- CONTENIDO DESTACADO -->
-  <section id="contenido" class="section cards" aria-labelledby="titulo-contenido">
-    <h2 id="titulo-contenido">Contenido destacado</h2>
+  <!-- LINKS -->
+  <section id="links" class="social-section">
+    <h2 class="section-title">La comunidad vive acá</h2>
 
-    <div class="card-grid">
-      <article class="card">
-        <img src="assets/img/tiktok.png" alt="Canal de Twitch" />
-        <h3>Twitch</h3>
-        <p>Streams en vivo y eventos con la comunidad.</p>
-        <a class="btn btn-violeta" target="_blank" rel="noopener" href="https://twitch.tv/lvl5squad">Ver canal</a>
-      </article>
+    <div class="social-grid">
+      <a class="social-card twitch" 
+   href="https://twitch.tv/lvl5squad" 
+   target="_blank" rel="noopener">
 
-      <article class="card">
-        <img src="assets/img/tiktok.png" alt="Canal de YouTube" />
-        <h3>YouTube</h3>
-        <p>Clips, VODs, resubidos y series originales del squad.</p>
-        <a class="btn btn-rojo" target="_blank" rel="noopener" href="https://youtube.com/@LVL5SQUAD">Ver canal</a>
-      </article>
+        Twitch
+        <p>Streams en vivo y eventos</p>
+      </a>
 
-      <article class="card">
-        <img src="assets/img/tiktok.png" alt="Perfil de TikTok" />
-        <h3>TikTok</h3>
-        <p>Shorts, trends y humor gaming.</p>
-        <a class="btn btn-rosa" target="_blank" rel="noopener" href="https://tiktok.com/@lvl5squad">Ver canal</a>
-      </article>
+      <a class="social-card youtube" 
+   href="https://www.youtube.com/@lvl5squad" 
+   target="_blank" rel="noopener">
 
-      <article class="card">
-        <img src="assets/img/tiktok.png" alt="Perfil de Kick" />
-        <h3>Kick</h3>
-        <p>Streams en vivo y eventos con la comunidad</p>
-        <a class="btn btn-verde" target="_blank" rel="noopener" href="https://kick.com/lvl5squad">Ver canal</a>
-      </article>
+        YouTube
+        <p>Clips, VODs y series</p>
+      </a>
 
-      <article class="card">
-        <img src="assets/img/tiktok.png" alt="Perfil de Facebook" />
-        <h3>Facebook</h3>
-        <p>Streams en vivo y eventos con la comunidad</p>
-        <a class="btn btn-azul" target="_blank" rel="noopener" href="https://facebook.com/level-five-squad">Ver canal</a>
-      </article>
+      <a class="social-card tiktok" 
+   href="https://www.tiktok.com/@lvl5squad" 
+   target="_blank" rel="noopener">
 
-            <article class="card">
-        <img src="assets/img/tiktok.png" alt="Discord" />
-        <h3>Discord</h3>
-        <p>Discord oficial del canal. Podrás unirte y participar de los juegos y eventos en vivo.</p>
-        <a class="btn btn-gris" target="_blank" rel="noopener" href="https://discord.com/invite/vU77MfjyAa">Ver canal</a>
-      </article>
+        TikTok
+        <p>Shorts y humor gaming</p>
+      </a>
 
-    </div>
-  </section>
+      <a class="social-card discord" 
+   href="https://discord.gg/TU_INVITE" 
+   target="_blank" rel="noopener">
 
-  <!-- MÚSICA -->
-  <section id="musica" class="section musica-promocional" aria-labelledby="titulo-musica">
-  <div class="section-content musica">
-
-    <div class="musica-info">
-      <h2 id="titulo-musica">Música original LVL5</h2>
-
-      <p class="musica-tagline">
-        No usamos música genérica. Creamos la nuestra.
-        <strong>Esta playlist es parte de nuestra identidad.</strong>
-      </p>
-
-      <p class="musica-descripcion">
-        Tracks originales, openings, experimentos sonoros y temas que
-        acompañan streams, clips y momentos del squad.
-      </p>
-
-      <a class="btn btn-rojo" target="_blank" rel="noopener"
-         href="https://www.youtube.com/playlist?list=PLNHmFLkxCLN540kb-0phwxSRf64c7iuPi">
-        Ver playlist completa en YouTube
+        Discord
+        <p>La base del squad</p>
       </a>
     </div>
+  </section>
 
-    <div class="musica-player">
-      <iframe
-        src="https://www.youtube.com/embed/videoseries?list=PLNHmFLkxCLN540kb-0phwxSRf64c7iuPi"
-        title="Playlist musical LVL5 Squad"
-        loading="lazy"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  <!-- MUSIC -->
+  <section id="music" class="lvl5-card">
+    <h2>Música original LVL5</h2>
+    <p class="text-dim">Openings, tracks y experimentos sonoros.</p>
+
+    <div class="music-embed">
+      <iframe 
+        src="https://youtu.be/_e-v7fd6It4"
         allowfullscreen>
       </iframe>
     </div>
-
-  </div>
-</section>
-
-
-  <!-- CONTACTO -->
-  <section id="contacto" class="section" aria-labelledby="titulo-contacto">
-    <div class="section-content contacto">
-      <h2 id="titulo-contacto">Contacto</h2>
-      <p>¿Querés colaborar, sponsorear o sumarte al equipo? Escribinos.</p>
-      <a class="btn btn-bordo" href="mailto:contacto@levelfivesquad.com.ar">Enviar email</a>
-    </div>
   </section>
 
-  <footer>
-    <p>© 2025 LVL5 Squad — Hecho con ❤️ en Argentina</p>
-  </footer>
+</main>
 
-  <!-- Script para estado Twitch -->
-  <script src="assets/js/main.js"></script>
+<footer>
+  LVL5 Squad © 2026
+</footer>
+
+<script src="/assets/js/script.js"></script>
 </body>
 </html>
-

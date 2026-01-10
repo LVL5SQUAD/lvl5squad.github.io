@@ -1,0 +1,267 @@
+:root{
+  --bg:#0b0f14;
+  --card:#131a26;
+  --text:#e5ecf4;
+  --dim:#a7b1c2;
+  --violeta:#6c3bd9;
+  --rojo:#e63946;
+  --radius:16px;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  font-family:system-ui, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+a{ text-decoration:none; color:inherit; }
+
+/* ================= HEADER ================= */
+
+.site-header{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+}
+
+/* NAVBAR sobre el banner */
+.navbar{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:10;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 28px;
+  background:rgba(11,15,20,.65);
+  backdrop-filter:blur(10px) saturate(140%);
+}
+
+.logo{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  font-weight:700;
+}
+
+.logo img{ width:34px; }
+
+.nav-links{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+
+.nav-links a{
+  opacity:.85;
+  font-weight:600;
+}
+
+.nav-links a:hover{ opacity:1; }
+
+.btn{
+  padding:8px 14px;
+  border-radius:12px;
+  font-weight:700;
+}
+
+.btn-violeta{
+  background:var(--violeta);
+  color:white;
+  transition:transform .2s, box-shadow .3s;
+}
+
+.btn-violeta:hover{
+  transform:translateY(-1px);
+  box-shadow:0 0 24px rgba(108,59,217,.7);
+}
+
+/* ================= BANNER ================= */
+
+.header-banner{
+  position:relative;
+  min-height:85vh;                 /* fullscreen en desktop */
+  width:100%;
+  background-image:url("/assets/img/squad.jpg");
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:contain;         /* NO recorta nombres */
+  background-color:#0b0f14;
+  display:flex;
+  align-items:flex-end;
+}
+
+.banner-overlay{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(10,10,20,.25) 0%,
+      rgba(10,10,20,.55) 55%,
+      rgba(10,10,20,.95) 100%
+    );
+}
+
+/* ================= LAYOUT ================= */
+
+.container{
+  max-width:1200px;
+  margin:0 auto;
+  padding:20px;
+  display:grid;
+  gap:32px;
+}
+
+/* HERO */
+
+.hero{
+  position:relative;
+  z-index:2;
+  margin-top:-120px;               /* flota sobre el banner */
+}
+
+.hero h1{
+  font-size:clamp(2.4rem, 4vw, 3.2rem);
+  font-weight:900;
+  letter-spacing:-.5px;
+}
+
+.hero p{ color:var(--dim); }
+
+.lvl5-card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:18px;
+}
+
+/* ================= LIVE ================= */
+
+#livePill{
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:999px;
+  background:#2a3142;
+  margin-bottom:8px;
+}
+
+#livePill.live{
+  background:var(--rojo);
+  color:white;
+}
+
+#liveCard.is-live{
+  box-shadow:
+    0 0 0 1px rgba(230,57,70,.5),
+    0 0 20px rgba(230,57,70,.3);
+}
+
+.text-dim{ color:var(--dim); }
+.small{ font-size:.9rem; }
+
+/* ================= SOCIAL ================= */
+
+.social-section{ margin-top:40px; }
+
+.section-title{
+  font-size:1.6rem;
+  margin-bottom:16px;
+}
+
+.social-grid{
+  display:grid;
+  gap:16px;
+}
+
+.social-card{
+  position:relative;
+  background:linear-gradient(135deg,#1a2233,#111827);
+  border-radius:16px;
+  padding:22px;
+  min-height:140px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  font-weight:700;
+  transition:transform .25s, box-shadow .25s;
+  isolation:isolate;
+}
+
+.social-card p{
+  font-weight:400;
+  color:var(--dim);
+  margin:6px 0 0;
+}
+
+.social-card::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:inherit;
+  opacity:0;
+  filter:blur(18px);
+  transition:opacity .25s ease;
+  z-index:-1;
+}
+
+.social-card:hover{
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 20px 40px rgba(0,0,0,.4);
+}
+
+.social-card:hover::before{ opacity:.6; }
+
+.social-card.twitch{ border-left:6px solid #9146ff; }
+.social-card.twitch::before{ background:#9146ff; }
+
+.social-card.youtube{ border-left:6px solid #ff0000; }
+.social-card.youtube::before{ background:#ff0000; }
+
+.social-card.tiktok{ border-left:6px solid #ff0050; }
+.social-card.tiktok::before{ background:#ff0050; }
+
+.social-card.discord{ border-left:6px solid #5865f2; }
+.social-card.discord::before{ background:#5865f2; }
+
+/* ================= MUSIC ================= */
+
+.music-embed iframe{
+  width:100%;
+  aspect-ratio:16/9;
+  border:none;
+  border-radius:12px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  text-align:center;
+  padding:24px;
+  color:var(--dim);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (min-width:768px){
+  .social-grid{ grid-template-columns:repeat(2,1fr); }
+}
+
+@media (min-width:1024px){
+  .social-grid{ grid-template-columns:repeat(4,1fr); }
+}
+
+@media (max-width:768px){
+  .header-banner{
+    min-height:55vh;
+    background-size:cover;
+  }
+
+  .hero{
+    margin-top:-60px;
+  }
+}
