@@ -19,6 +19,10 @@ body{
 
 }
 
+body[data-live] .navbar{
+  box-shadow:0 0 40px rgba(230,57,70,.9);
+}
+
 a{ text-decoration:none; color:inherit; }
 
 /* ================= HEADER ================= */
@@ -599,4 +603,90 @@ body.is-live .event-badge{
 
 .event-alert.urgent .event-badge{
   background:#e63946;
+}
+
+/* =========================
+   MODO SEGÚN HORARIO
+   ========================= */
+
+/* ☀️ DÍA */
+body.time-day {
+  --bg:#0b0f14;
+}
+
+body.time-day .header-banner {
+  filter: brightness(1) contrast(1);
+}
+
+body.time-day .navbar {
+  backdrop-filter: blur(8px);
+}
+
+/* 🌙 NOCHE */
+body.time-night {
+  --bg:#080b11;
+}
+
+body.time-night .header-banner {
+  filter: brightness(.85) contrast(1.1);
+}
+
+body.time-night .navbar {
+  box-shadow:0 0 30px rgba(108,59,217,.25);
+}
+
+/* 🌑 MADRUGADA (after stream vibes) */
+body.time-late {
+  --bg:#05070c;
+}
+
+body.time-late .header-banner {
+  filter: brightness(.7) contrast(1.2) saturate(1.1);
+}
+
+body.time-late .navbar {
+  background:rgba(5,5,10,.85);
+  box-shadow:0 0 40px rgba(230,57,70,.35);
+}
+
+body.time-late .hero h1 {
+  text-shadow:0 0 22px rgba(230,57,70,.6);
+}
+
+body.time-late .sound-indicator {
+  opacity:.85;
+}
+
+/* =========================
+   LATIDO OFFLINE (IDLE)
+   ========================= */
+
+body:not(.is-live) .header-banner::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(
+      500px 160px at top center,
+      rgba(108,59,217,.35),
+      transparent 70%
+    );
+  animation: idle-pulse 6s ease-in-out infinite;
+  pointer-events:none;
+}
+
+@keyframes idle-pulse{
+  0%{ opacity:.25; }
+  50%{ opacity:.55; }
+  100%{ opacity:.25; }
+}
+
+/* Hero más calmado */
+body:not(.is-live) .hero h1{
+  text-shadow:0 0 14px rgba(108,59,217,.35);
+}
+
+/* Navbar en reposo */
+body:not(.is-live) .navbar{
+  box-shadow:0 0 20px rgba(108,59,217,.15);
 }

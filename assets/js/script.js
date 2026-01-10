@@ -1,5 +1,5 @@
 // =====================================================
-// Utilidades generales
+// UTILIDADES GENERALES
 // =====================================================
 
 // Año automático
@@ -7,18 +7,27 @@ const yearEl = document.getElementById('y');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // =====================================================
-// CONFIGURACIÓN
+// CONFIGURACIÓN GLOBAL
 // =====================================================
 
 const API_URL = 'https://levelfivesquad.com.ar/api/twitch/status';
 const POLL_MS = 60_000;
 const DEFAULT_CHANNEL = 'lvl5squad';
 
-// 🔴 Simulación visual (NO BORRAR)
+// ⚠️ SOLO PARA DESARROLLO VISUAL
+// Cuando Twitch esté activo en serio → false
 const SIMULATE_LIVE = true;
 
 // =====================================================
-// Twitch Live Status
+// ESTADO VISUAL CENTRALIZADO (CLAVE)
+// =====================================================
+
+function setLiveVisualState(isLive){
+  document.body.classList.toggle('is-live', isLive);
+}
+
+// =====================================================
+// TWITCH LIVE STATUS (REAL)
 // =====================================================
 
 async function updateLiveUI() {
@@ -35,13 +44,10 @@ async function updateLiveUI() {
     const { live, viewers, user } = await res.json();
     const channel = user || DEFAULT_CHANNEL;
 
-    twitchBtn.href = `https://twitch.tv/${channel}`;
+    if (twitchBtn) twitchBtn.href = `https://twitch.tv/${channel}`;
 
-// Estética siempre viva
-document.body.classList.add('is-live');
-
-// Estado real separado
-document.body.toggleAttribute('data-live', live);
+    // 🎨 Estado visual
+    setLiveVisualState(live);
 
     if (live) {
       livePill.textContent = '🔴 EN VIVO AHORA';
@@ -58,14 +64,17 @@ document.body.toggleAttribute('data-live', live);
     }
 
   } catch (err) {
-    // ⚠️ FALLBACK VISUAL
+    // =================================================
+    // FALLBACK VISUAL (NO ROMPE ESTÉTICA)
+    // =================================================
     if (!SIMULATE_LIVE) return;
 
-    document.body.classList.add('is-live');
+    setLiveVisualState(true);
 
     livePill.textContent = '🔴 EN VIVO AHORA';
     livePill.classList.add('live');
     liveCard.classList.add('is-live');
+    liveNote.textContent = '¡Entrá al stream!';
     viewerEl.textContent = Math.floor(Math.random() * 200) + 50;
   }
 }
@@ -75,15 +84,16 @@ updateLiveUI();
 setInterval(updateLiveUI, POLL_MS);
 
 // =====================================================
-// TRANSICIÓN GO LIVE (NO TOCAR)
+// TRANSICIÓN GO LIVE (SOLO VISUAL)
 // =====================================================
 
 if (SIMULATE_LIVE) {
+  setLiveVisualState(true);
   document.body.classList.add('go-live');
 }
 
 // =====================================================
-// AUDIO LIVE
+// AUDIO AMBIENTE LIVE
 // =====================================================
 
 const audio = document.getElementById('liveSound');
@@ -91,11 +101,11 @@ if (SIMULATE_LIVE && audio) {
   document.addEventListener('click', () => {
     audio.volume = 0.25;
     audio.play();
-  }, { once: true });
+  }, { once:true });
 }
 
 // =====================================================
-// VIEWERS FAKE (solo simulación)
+// VIEWERS FAKE (SOLO SIMULACIÓN)
 // =====================================================
 
 if (SIMULATE_LIVE) {
@@ -111,26 +121,26 @@ if (SIMULATE_LIVE) {
 }
 
 // =====================================================
-// Navbar hide / show on scroll
+// NAVBAR HIDE / SHOW AL SCROLL
 // =====================================================
 
 const navbar = document.querySelector('.navbar');
-let lastY = window.scrollY;
+let lastScrollY = window.scrollY;
 
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
 
-  if (y > lastY && y > 80) {
+  if (y > lastScrollY && y > 80) {
     navbar.classList.add('nav-hidden');
   } else {
     navbar.classList.remove('nav-hidden');
   }
 
-  lastY = y;
+  lastScrollY = y;
 });
 
 // =====================================================
-// Banner parallax (SUAVE)
+// BANNER PARALLAX (SUAVE)
 // =====================================================
 
 const banner = document.querySelector('.header-banner');
@@ -141,18 +151,23 @@ if (banner && window.innerWidth > 768) {
 }
 
 // =====================================================
-// Chat embebido
+// CHAT EMBEBIDO COLAPSABLE
 // =====================================================
 
 const chatToggle = document.getElementById('chatToggle');
 const chatPanel  = document.getElementById('chatPanel');
 const chatClose  = document.getElementById('chatClose');
 
-chatToggle?.addEventListener('click', () => chatPanel.classList.add('open'));
-chatClose?.addEventListener('click', () => chatPanel.classList.remove('open'));
+chatToggle?.addEventListener('click', () => {
+  chatPanel.classList.add('open');
+});
+
+chatClose?.addEventListener('click', () => {
+  chatPanel.classList.remove('open');
+});
 
 // =====================================================
-// Cuenta regresiva evento
+// CUENTA REGRESIVA EVENTO
 // =====================================================
 
 const eventDate = new Date("2026-01-31T21:00:00-03:00").getTime();
@@ -166,7 +181,8 @@ function updateCountdown() {
   const diff = eventDate - Date.now();
 
   if (diff <= 0) {
-    document.getElementById("countdown").innerHTML = "<strong>¡ES AHORA!</strong>";
+    document.getElementById("countdown").innerHTML =
+      "<strong>¡ES AHORA!</strong>";
     eventAlert.classList.add("urgent");
     return;
   }
@@ -176,8 +192,29 @@ function updateCountdown() {
   m.textContent = Math.floor(diff / 60000) % 60;
   s.textContent = Math.floor(diff / 1000) % 60;
 
-  eventAlert.classList.toggle("urgent", diff < 10 * 60 * 1000);
+  // Modo urgente últimos 10 minutos
+  eventAlert.classList.toggle("urgent", diff <= 10 * 60 * 1000);
 }
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
+
+// =====================================================
+// MODO HORARIO AUTOMÁTICO (AMBIENTE)
+// =====================================================
+
+function setTimeMode(){
+  const hour = new Date().getHours();
+  document.body.classList.remove('time-day', 'time-night', 'time-late');
+
+  if (hour >= 7 && hour < 19) {
+    document.body.classList.add('time-day');
+  } else if (hour >= 19 && hour < 24) {
+    document.body.classList.add('time-night');
+  } else {
+    document.body.classList.add('time-late');
+  }
+}
+
+setTimeMode();
+setInterval(setTimeMode, 10 * 60 * 1000);
