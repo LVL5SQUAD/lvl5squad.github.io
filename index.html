@@ -7,6 +7,10 @@
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
+<audio id="liveSound" loop>
+  <source src="assets/audio/live-ambient.mp3" type="audio/mpeg">
+</audio>
+
 <body>
 
 <!-- ================= HEADER ================= -->
@@ -43,7 +47,20 @@
       <span id="livePill">Offline</span>
       <p class="text-dim small">Seguinos en Twitch y activá notificaciones.</p>
     </div>
+
+    <div id="viewerCount" class="viewer-count">
+  👁 <span>0</span> viewers
+</div>
+
   </section>
+
+  <!-- AUDIO LIVE -->
+  <div class="sound-indicator">
+  <div class="sound-bars">
+    <span></span><span></span><span></span>
+  </div>
+  LIVE AUDIO
+</div>
 
   <!-- LINKS -->
   <section id="links" class="social-section">
@@ -84,17 +101,20 @@
     </div>
   </section>
 
-  <!-- MUSIC -->
+  <!-- MUSIC-->
   <section id="music" class="lvl5-card">
     <h2>Música original LVL5</h2>
     <p class="text-dim">Openings, tracks y experimentos sonoros.</p>
 
     <div class="music-embed">
-      <iframe 
-        src="https://youtu.be/_e-v7fd6It4"
-        allowfullscreen>
-      </iframe>
-    </div>
+  <iframe
+    src="https://www.youtube.com/embed/videoseries?list=PLNHmFLkxCLN540kb-0phwxSRf64c7iuPi"
+    title="LVL5 Squad Playlist"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
+
   </section>
 
 </main>

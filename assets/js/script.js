@@ -167,3 +167,74 @@ updateLiveUI();
 
 // Refresco periódico
 setInterval(updateLiveUI, POLL_MS);
+
+// ==============================
+// Banner Parallax
+// ==============================
+
+const banner = document.querySelector('.header-banner');
+
+if (banner) {
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    banner.style.transform = `translateY(${y * 0.15}px)`;
+  });
+}
+
+// ==============================
+// SIMULACIÓN MODO EN VIVO
+// ==============================
+
+const SIMULATE_LIVE = true; // <-- CAMBIÁ A false CUANDO QUIERAS
+
+if (SIMULATE_LIVE) {
+  document.body.classList.add('is-live');
+
+  const pill = document.getElementById('livePill');
+  if (pill) pill.textContent = '🔴 EN VIVO AHORA';
+}
+
+// ============================== 🧠 IMPORTANTE (visión a futuro) 
+// Cuando conectes esto a tu API real de Twitch, 
+// solo vas a cambiar esto: 
+// document.body.classList.add('is-live'); 
+// por: 
+// document.body.classList.toggle('is-live', live);
+
+// ==============================
+// AUDIO LIVE
+// ==============================
+
+const audio = document.getElementById('liveSound');
+
+if (SIMULATE_LIVE && audio) {
+  document.addEventListener('click', () => {
+    audio.volume = 0.25;
+    audio.play();
+  }, { once:true });
+}
+
+// ==============================
+// VIEWERS FAKE (PLACEHOLDER)
+// ==============================
+
+const viewerEl = document.querySelector('#viewerCount span');
+
+if (SIMULATE_LIVE && viewerEl) {
+  let viewers = Math.floor(Math.random() * 200) + 50;
+  viewerEl.textContent = viewers;
+
+  setInterval(() => {
+    viewers += Math.floor(Math.random() * 5 - 2);
+    if (viewers < 20) viewers = 20;
+    viewerEl.textContent = viewers;
+  }, 3000);
+}
+
+// ==============================
+// TRANSICIÓN GO LIVE
+// ==============================
+
+if (SIMULATE_LIVE) {
+  document.body.classList.add('go-live');
+}

@@ -130,6 +130,12 @@ a{ text-decoration:none; color:inherit; }
   font-size:clamp(2.4rem, 4vw, 3.2rem);
   font-weight:900;
   letter-spacing:-.5px;
+  margin:0 0 12px;  text-shadow:0 0 12px rgba(108,59,217,.35);
+}
+
+body.is-live .hero h1{
+  text-shadow:0 0 18px rgba(230,57,70,.6);
+  
 }
 
 .hero p{ color:var(--dim); }
@@ -210,9 +216,16 @@ a{ text-decoration:none; color:inherit; }
 }
 
 .social-card:hover{
-  transform:translateY(-6px) scale(1.02);
-  box-shadow:0 20px 40px rgba(0,0,0,.4);
+  background:
+    linear-gradient(135deg,#1a2233,#111827),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,.02) 3px
+    );
 }
+
 
 .social-card:hover::before{ opacity:.6; }
 
@@ -264,4 +277,150 @@ footer{
   .hero{
     margin-top:-60px;
   }
+}
+/* =========================
+   Banner animado
+   ========================= */
+
+.header-banner{
+  animation: banner-breathe 18s ease-in-out infinite;
+  will-change: background-position, transform;
+}
+
+@keyframes banner-breathe{
+  0%{
+    background-position:50% 50%;
+  }
+  50%{
+    background-position:50% 42%;
+  }
+  100%{
+    background-position:50% 50%;
+  }
+}
+
+/* =========================
+   MODO EN VIVO
+   ========================= */
+
+body.is-live{
+  --violeta:#e63946;
+}
+
+/* Glow en el banner */
+body.is-live .header-banner::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(
+      600px 200px at top center,
+      rgba(230,57,70,.45),
+      transparent 70%
+    );
+  animation: live-pulse 2.2s ease-in-out infinite;
+  pointer-events:none;
+}
+
+@keyframes live-pulse{
+  0%{ opacity:.4; }
+  50%{ opacity:.9; }
+  100%{ opacity:.4; }
+}
+
+/* Navbar más intensa */
+body.is-live .navbar{
+  background:rgba(90,10,10,.75);
+  box-shadow:0 0 24px rgba(230,57,70,.6);
+}
+
+/* LIVE pill */
+body.is-live #livePill{
+  background:#e63946;
+  color:white;
+  animation: live-blink 1.2s infinite;
+}
+
+@keyframes live-blink{
+  0%,100%{ opacity:1; }
+  50%{ opacity:.6; }
+}
+
+/* =========================
+   Indicador de audio
+   ========================= */
+
+.sound-indicator{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(8px);
+  padding:10px 14px;
+  border-radius:12px;
+  font-size:.85rem;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  opacity:0;
+  transform:translateY(10px);
+  transition:.3s;
+}
+
+body.is-live .sound-indicator{
+  opacity:1;
+  transform:none;
+}
+
+.sound-bars{
+  display:flex;
+  gap:3px;
+}
+
+.sound-bars span{
+  width:3px;
+  height:12px;
+  background:#e63946;
+  animation:sound-bar 1s infinite ease-in-out;
+}
+
+.sound-bars span:nth-child(2){ animation-delay:.2s; }
+.sound-bars span:nth-child(3){ animation-delay:.4s; }
+
+@keyframes sound-bar{
+  0%,100%{ height:6px; opacity:.4; }
+  50%{ height:14px; opacity:1; }
+}
+
+.viewer-count{
+  margin-top:14px;
+  font-weight:700;
+  color:#e63946;
+  letter-spacing:.5px;
+  opacity:.85;
+}
+
+/* =========================
+   TRANSICIÓN LIVE
+   ========================= */
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:#e63946;
+  z-index:9999;
+  transform:scaleY(0);
+  transform-origin:top;
+  pointer-events:none;
+}
+
+body.go-live::before{
+  animation:go-live 1.2s ease forwards;
+}
+
+@keyframes go-live{
+  0%{ transform:scaleY(0); }
+  40%{ transform:scaleY(1); }
+  100%{ transform:scaleY(0); transform-origin:bottom; }
 }
