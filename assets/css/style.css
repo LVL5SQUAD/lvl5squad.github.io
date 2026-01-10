@@ -15,6 +15,8 @@ body{
   font-family:system-ui, sans-serif;
   background:var(--bg);
   color:var(--text);
+  padding-top:64px; /* altura aproximada del navbar */
+
 }
 
 a{ text-decoration:none; color:inherit; }
@@ -579,5 +581,22 @@ body.is-live .event-alert{
 }
 
 body.is-live .event-badge{
+  background:#e63946;
+}
+/* =========================
+   Evento urgente
+   ========================= */
+
+.event-alert.urgent{
+  animation: urgent-pulse 1.6s infinite;
+}
+
+@keyframes urgent-pulse{
+  0%{ box-shadow:0 0 20px rgba(230,57,70,.4); }
+  50%{ box-shadow:0 0 50px rgba(230,57,70,.85); }
+  100%{ box-shadow:0 0 20px rgba(230,57,70,.4); }
+}
+
+.event-alert.urgent .event-badge{
   background:#e63946;
 }

@@ -1,226 +1,105 @@
-// ==============================
+// =====================================================
 // Utilidades generales
-// ==============================
+// =====================================================
 
-// Año automático en el footer
+// Año automático
 const yearEl = document.getElementById('y');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-// Mejora de accesibilidad: foco al destino de anclas internas
-document.querySelectorAll('a[href^="#"]').forEach((a) => {
-  a.addEventListener('click', () => {
-    const id = a.getAttribute('href').slice(1);
-    const target = document.getElementById(id);
-    if (target) {
-      setTimeout(() => target.setAttribute('tabindex', '-1'), 0);
-      setTimeout(() => target.focus({ preventScroll: true }), 300);
-    }
-  });
-});
+// =====================================================
+// CONFIGURACIÓN
+// =====================================================
 
-// ==============================
-// Twitch Live Status
-// ==============================
-
-const API_URL = 'https://levelfivesquad.com.ar/api/twitch/status'; // tu Worker
-const POLL_MS = 60_000;   // refrescar cada 60s
-const MAX_RETRIES = 2;    // reintentos si falla
+const API_URL = 'https://levelfivesquad.com.ar/api/twitch/status';
+const POLL_MS = 60_000;
 const DEFAULT_CHANNEL = 'lvl5squad';
 
-// parents permitidos para el embed (prod y dev)
-const TWITCH_PARENTS = [
-  'levelfivesquad.com.ar',
-  'www.levelfivesquad.com.ar',
-  'lvl5squad.github.io',
-  'localhost',
-  '127.0.0.1'
-];
+// 🔴 Simulación visual (NO BORRAR)
+const SIMULATE_LIVE = true;
 
-// Construye la cadena de parents para Twitch (repetidos)
-function parentParams() {
-  return TWITCH_PARENTS.map(p => `parent=${encodeURIComponent(p)}`).join('&');
-}
-
-// Reintento con backoff simple
-async function fetchWithRetry(url, { retries = MAX_RETRIES } = {}) {
-  let lastErr;
-  for (let i = 0; i <= retries; i++) {
-    try {
-      const res = await fetch(url, { cache: 'no-store' });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return await res.json();
-    } catch (err) {
-      lastErr = err;
-      // pequeño backoff
-      await new Promise(r => setTimeout(r, 400 * (i + 1)));
-    }
-  }
-  throw lastErr;
-}
+// =====================================================
+// Twitch Live Status
+// =====================================================
 
 async function updateLiveUI() {
-  const liveCard    = document.getElementById('liveCard');
-  const livePill    = document.getElementById('livePill');
-  const liveNote    = document.getElementById('liveNote');
-  const liveInfo    = document.getElementById('liveInfo');
-  const liveTitle   = document.getElementById('liveTitle');
-  const liveViewers = document.getElementById('liveViewers');
-  const liveEmbed   = document.getElementById('liveEmbed');
-
-  // Botón puede ser #twitchBtn o .btn-twitch del header
-  const twitchBtn   = document.getElementById('twitchBtn') || document.querySelector('.btn-twitch');
+  const livePill  = document.getElementById('livePill');
+  const liveCard  = document.getElementById('liveCard');
+  const liveNote  = document.getElementById('liveNote');
+  const viewerEl  = document.querySelector('#viewerCount span');
+  const twitchBtn = document.getElementById('twitchBtn');
 
   try {
-    const data = await fetchWithRetry(API_URL);
-    const { live, title, viewers, user } = (data || {});
+    const res = await fetch(API_URL, { cache: 'no-store' });
+    if (!res.ok) throw new Error('API error');
+
+    const { live, viewers, user } = await res.json();
     const channel = user || DEFAULT_CHANNEL;
 
-    // Link del botón a tu canal siempre
-    if (twitchBtn) twitchBtn.href = `https://twitch.tv/${channel}`;
+    twitchBtn.href = `https://twitch.tv/${channel}`;
+
+// Estética siempre viva
+document.body.classList.add('is-live');
+
+// Estado real separado
+document.body.toggleAttribute('data-live', live);
 
     if (live) {
-      // 🔴 EN VIVO
-      livePill?.classList.add('live');
-      liveCard?.classList.add('is-live');
-
-      if (livePill)   livePill.textContent = '🔴 EN VIVO AHORA';
-      if (liveNote)   liveNote.textContent = '¡Entrá al stream!';
-      if (liveInfo)   liveInfo.style.display = 'block';
-      if (liveTitle)  liveTitle.textContent = title || 'Transmitiendo en Twitch';
-      if (liveViewers) liveViewers.textContent =
-        (typeof viewers === 'number' && viewers >= 0) ? `👀 Viewers: ${viewers}` : '';
-
-      // Badge en el botón del nav
-      if (twitchBtn) {
-        twitchBtn.setAttribute('data-live', '1');
-        if (typeof viewers === 'number') {
-          twitchBtn.title = `En vivo • ${viewers} espectadores`;
-        } else {
-          twitchBtn.removeAttribute('title');
-        }
-      }
-
-      // Mostrar embed (silenciado por default)
-      if (liveEmbed) {
-        liveEmbed.style.display = 'block';
-        const parents = parentParams();
-        const src = `https://player.twitch.tv/?channel=${encodeURIComponent(channel)}&${parents}&muted=true`;
-        liveEmbed.innerHTML = `
-          <iframe
-            src="${src}"
-            height="300"
-            width="100%"
-            frameborder="0"
-            scrolling="no"
-            allowfullscreen="true">
-          </iframe>
-        `;
-      }
-
+      livePill.textContent = '🔴 EN VIVO AHORA';
+      livePill.classList.add('live');
+      liveCard.classList.add('is-live');
+      liveNote.textContent = '¡Entrá al stream!';
+      viewerEl.textContent = viewers ?? 0;
     } else {
-      // 📴 OFFLINE
-      livePill?.classList.remove('live');
-      liveCard?.classList.remove('is-live');
-
-      if (livePill) livePill.textContent = 'Offline';
-      if (liveNote) liveNote.textContent = 'Seguinos en Twitch y activá notificaciones.';
-
-      if (liveInfo) liveInfo.style.display = 'none';
-      if (liveEmbed) {
-        liveEmbed.style.display = 'none';
-        liveEmbed.innerHTML = '';
-      }
-
-      // Quitar badge del nav
-      if (twitchBtn) {
-        twitchBtn.removeAttribute('data-live');
-        twitchBtn.removeAttribute('title');
-      }
+      livePill.textContent = 'Offline';
+      livePill.classList.remove('live');
+      liveCard.classList.remove('is-live');
+      liveNote.textContent = 'Seguinos en Twitch y activá notificaciones.';
+      viewerEl.textContent = 0;
     }
 
   } catch (err) {
-    console.error('Error consultando /api/twitch/status:', err);
+    // ⚠️ FALLBACK VISUAL
+    if (!SIMULATE_LIVE) return;
 
-    // Fallback seguro
-    livePill?.classList.remove('live');
-    liveCard?.classList.remove('is-live');
+    document.body.classList.add('is-live');
 
-    if (livePill) livePill.textContent = 'Estado no disponible';
-    if (liveNote) liveNote.textContent = 'No se pudo obtener el estado de Twitch.';
-
-    if (liveInfo) liveInfo.style.display = 'none';
-    if (liveEmbed) {
-      liveEmbed.style.display = 'none';
-      liveEmbed.innerHTML = '';
-    }
-
-    const twitchBtn = document.getElementById('twitchBtn') || document.querySelector('.btn-twitch');
-    if (twitchBtn) {
-      twitchBtn.removeAttribute('data-live');
-      twitchBtn.removeAttribute('title');
-    }
+    livePill.textContent = '🔴 EN VIVO AHORA';
+    livePill.classList.add('live');
+    liveCard.classList.add('is-live');
+    viewerEl.textContent = Math.floor(Math.random() * 200) + 50;
   }
 }
 
-// Primera carga
+// Primera carga + polling
 updateLiveUI();
-
-// Refresco periódico
 setInterval(updateLiveUI, POLL_MS);
 
-// ==============================
-// Banner Parallax
-// ==============================
-
-const banner = document.querySelector('.header-banner');
-
-if (banner) {
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    banner.style.transform = `translateY(${y * 0.15}px)`;
-  });
-}
-
-// ==============================
-// SIMULACIÓN MODO EN VIVO
-// ==============================
-
-const SIMULATE_LIVE = true; // <-- CAMBIÁ A false CUANDO QUIERAS
+// =====================================================
+// TRANSICIÓN GO LIVE (NO TOCAR)
+// =====================================================
 
 if (SIMULATE_LIVE) {
-  document.body.classList.add('is-live');
-
-  const pill = document.getElementById('livePill');
-  if (pill) pill.textContent = '🔴 EN VIVO AHORA';
+  document.body.classList.add('go-live');
 }
 
-// ============================== 🧠 IMPORTANTE (visión a futuro) 
-// Cuando conectes esto a tu API real de Twitch, 
-// solo vas a cambiar esto: 
-// document.body.classList.add('is-live'); 
-// por: 
-// document.body.classList.toggle('is-live', live);
-
-// ==============================
+// =====================================================
 // AUDIO LIVE
-// ==============================
+// =====================================================
 
 const audio = document.getElementById('liveSound');
-
 if (SIMULATE_LIVE && audio) {
   document.addEventListener('click', () => {
     audio.volume = 0.25;
     audio.play();
-  }, { once:true });
+  }, { once: true });
 }
 
-// ==============================
-// VIEWERS FAKE (PLACEHOLDER)
-// ==============================
+// =====================================================
+// VIEWERS FAKE (solo simulación)
+// =====================================================
 
-const viewerEl = document.querySelector('#viewerCount span');
-
-if (SIMULATE_LIVE && viewerEl) {
+if (SIMULATE_LIVE) {
+  const viewerEl = document.querySelector('#viewerCount span');
   let viewers = Math.floor(Math.random() * 200) + 50;
   viewerEl.textContent = viewers;
 
@@ -231,93 +110,73 @@ if (SIMULATE_LIVE && viewerEl) {
   }, 3000);
 }
 
-// ==============================
-// TRANSICIÓN GO LIVE
-// ==============================
-
-if (SIMULATE_LIVE) {
-  document.body.classList.add('go-live');
-}
-
-// ==============================
-// Navbar dinámico al scrollear
-// ==============================
+// =====================================================
+// Navbar hide / show on scroll
+// =====================================================
 
 const navbar = document.querySelector('.navbar');
-let lastScrollY = window.scrollY;
-let ticking = false;
-
-function onScroll() {
-  const currentScroll = window.scrollY;
-
-  if (currentScroll > lastScrollY && currentScroll > 80) {
-    // Bajando → ocultar
-    navbar.classList.add('nav-hidden');
-    navbar.classList.remove('nav-visible');
-  } else {
-    // Subiendo → mostrar
-    navbar.classList.remove('nav-hidden');
-    navbar.classList.add('nav-visible');
-  }
-
-  lastScrollY = currentScroll;
-  ticking = false;
-}
+let lastY = window.scrollY;
 
 window.addEventListener('scroll', () => {
-  if (!ticking) {
-    window.requestAnimationFrame(onScroll);
-    ticking = true;
+  const y = window.scrollY;
+
+  if (y > lastY && y > 80) {
+    navbar.classList.add('nav-hidden');
+  } else {
+    navbar.classList.remove('nav-hidden');
   }
+
+  lastY = y;
 });
 
-// ==============================
-// Chat embebido colapsable
-// ==============================
+// =====================================================
+// Banner parallax (SUAVE)
+// =====================================================
+
+const banner = document.querySelector('.header-banner');
+if (banner && window.innerWidth > 768) {
+  window.addEventListener('scroll', () => {
+    banner.style.transform = `translateY(${window.scrollY * 0.08}px)`;
+  });
+}
+
+// =====================================================
+// Chat embebido
+// =====================================================
 
 const chatToggle = document.getElementById('chatToggle');
 const chatPanel  = document.getElementById('chatPanel');
 const chatClose  = document.getElementById('chatClose');
 
-chatToggle.addEventListener('click', () => {
-  chatPanel.classList.add('open');
-});
+chatToggle?.addEventListener('click', () => chatPanel.classList.add('open'));
+chatClose?.addEventListener('click', () => chatPanel.classList.remove('open'));
 
-chatClose.addEventListener('click', () => {
-  chatPanel.classList.remove('open');
-});
-
-// ==============================
+// =====================================================
 // Cuenta regresiva evento
-// ==============================
+// =====================================================
 
-// Fecha del sorteo (Argentina GMT-3)
 const eventDate = new Date("2026-01-31T21:00:00-03:00").getTime();
-
 const d = document.getElementById("cdDays");
 const h = document.getElementById("cdHours");
 const m = document.getElementById("cdMinutes");
 const s = document.getElementById("cdSeconds");
+const eventAlert = document.getElementById("eventAlert");
 
-function updateCountdown(){
-  const now = Date.now();
-  const diff = eventDate - now;
+function updateCountdown() {
+  const diff = eventDate - Date.now();
 
-  if(diff <= 0){
-    document.getElementById("countdown").innerHTML =
-      "<strong>¡ES AHORA!</strong>";
+  if (diff <= 0) {
+    document.getElementById("countdown").innerHTML = "<strong>¡ES AHORA!</strong>";
+    eventAlert.classList.add("urgent");
     return;
   }
 
-  const days    = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours   = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((diff / (1000 * 60)) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
+  d.textContent = Math.floor(diff / 86400000);
+  h.textContent = Math.floor(diff / 3600000) % 24;
+  m.textContent = Math.floor(diff / 60000) % 60;
+  s.textContent = Math.floor(diff / 1000) % 60;
 
-  d.textContent = days;
-  h.textContent = hours;
-  m.textContent = minutes;
-  s.textContent = seconds;
+  eventAlert.classList.toggle("urgent", diff < 10 * 60 * 1000);
 }
 
 updateCountdown();
