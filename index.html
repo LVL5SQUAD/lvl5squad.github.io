@@ -4,16 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LVL5 Squad</title>
-<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
-<audio id="liveSound" loop>
-  <source src="assets/audio/live-ambient.mp3" type="audio/mpeg">
-</audio>
+<!-- ================= CHAT EMBEBIDO ================= -->
+
+<div class="chat-toggle" id="chatToggle">
+  💬 Chat
+</div>
+
+<aside class="chat-panel" id="chatPanel">
+  <header class="chat-header">
+    <span>Chat en vivo</span>
+    <button id="chatClose">✕</button>
+  </header>
+
+  <div class="chat-body">
+    <iframe
+      src="https://www.twitch.tv/embed/lvl5squad/chat?parent=levelfivesquad.com.ar"
+      height="100%"
+      width="100%"
+      allowfullscreen>
+    </iframe>
+  </div>
+</aside>
+
 
 <body>
 
-<!-- ================= HEADER ================= -->
+<audio id="liveSound" loop>
+  <source src="/assets/audio/live-ambient.mp3" type="audio/mpeg">
+</audio>
+
 <header class="site-header">
 
   <nav class="navbar">
@@ -25,7 +47,9 @@
     <div class="nav-links">
       <a href="#links">Links</a>
       <a href="#music">Música</a>
-      <a class="btn btn-violeta" href="#">Twitch</a>
+      <a class="btn btn-violeta" id="twitchBtn" href="https://twitch.tv/lvl5squad" target="_blank">
+        Twitch
+      </a>
     </div>
   </nav>
 
@@ -35,92 +59,100 @@
 
 </header>
 
-<!-- ================= MAIN ================= -->
 <main class="container">
 
-  <!-- HERO -->
   <section class="hero">
-   <h1>Gaming, humor y <span>comunidad</span></h1>
+    <h1>Gaming, humor y <span>comunidad</span></h1>
     <p>Streaming, clips y música original con estética anime.</p>
 
     <div id="liveCard" class="lvl5-card">
       <span id="livePill">Offline</span>
-      <p class="text-dim small">Seguinos en Twitch y activá notificaciones.</p>
+      <p id="liveNote" class="text-dim small">
+        Seguinos en Twitch y activá notificaciones.
+      </p>
     </div>
 
     <div id="viewerCount" class="viewer-count">
-  👁 <span>0</span> viewers
-</div>
-
+      👁 <span>0</span> viewers
+    </div>
   </section>
 
-  <!-- AUDIO LIVE -->
   <div class="sound-indicator">
-  <div class="sound-bars">
-    <span></span><span></span><span></span>
+    <div class="sound-bars">
+      <span></span><span></span><span></span>
+    </div>
+    LIVE AUDIO
   </div>
-  LIVE AUDIO
-</div>
 
-  <!-- LINKS -->
+  <!-- ================= ALERTA EVENTO ================= -->
+
+<section class="lvl5-card event-alert" id="eventAlert">
+  <div class="event-badge">🎁 SORTEO</div>
+
+  <h2>Sorteo en vivo</h2>
+  <p class="event-date">
+    31 de enero · 21:00 hs (ARG)
+  </p>
+
+  <div class="countdown" id="countdown">
+    <span><strong id="cdDays">--</strong>d</span>
+    <span><strong id="cdHours">--</strong>h</span>
+    <span><strong id="cdMinutes">--</strong>m</span>
+    <span><strong id="cdSeconds">--</strong>s</span>
+  </div>
+
+  <a
+    href="https://www.twitch.tv/lvl5squad"
+    target="_blank"
+    class="btn btn-violeta event-btn"
+  >
+    Activá la alerta en Twitch
+  </a>
+
+  <p class="event-note">
+    Canjeá tus puntos del canal durante el stream 🎮
+  </p>
+</section>
+
+
   <section id="links" class="social-section">
     <h2 class="section-title">La comunidad vive acá</h2>
 
     <div class="social-grid">
-      <a class="social-card twitch" 
-   href="https://twitch.tv/lvl5squad" 
-   target="_blank" rel="noopener">
-
-        Twitch
+      <a class="social-card twitch" href="https://twitch.tv/lvl5squad" target="_blank">Twitch
         <p>Streams en vivo y eventos</p>
       </a>
 
-      <a class="social-card youtube" 
-   href="https://www.youtube.com/@lvl5squad" 
-   target="_blank" rel="noopener">
-
-        YouTube
+      <a class="social-card youtube" href="https://www.youtube.com/@lvl5squad" target="_blank">YouTube
         <p>Clips, VODs y series</p>
       </a>
 
-      <a class="social-card tiktok" 
-   href="https://www.tiktok.com/@lvl5squad" 
-   target="_blank" rel="noopener">
-
-        TikTok
+      <a class="social-card tiktok" href="https://www.tiktok.com/@lvl5squad" target="_blank">TikTok
         <p>Shorts y humor gaming</p>
       </a>
 
-      <a class="social-card discord" 
-   href="https://discord.gg/TU_INVITE" 
-   target="_blank" rel="noopener">
-
-        Discord
+      <a class="social-card discord" href="#" target="_blank">Discord
         <p>La base del squad</p>
       </a>
     </div>
   </section>
 
-  <!-- MUSIC-->
   <section id="music" class="lvl5-card">
     <h2>Música original LVL5</h2>
     <p class="text-dim">Openings, tracks y experimentos sonoros.</p>
 
     <div class="music-embed">
-  <iframe
-    src="https://www.youtube.com/embed/videoseries?list=PLNHmFLkxCLN540kb-0phwxSRf64c7iuPi"
-    title="LVL5 Squad Playlist"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-
+      <iframe
+        src="https://www.youtube.com/embed/videoseries?list=PLNHmFLkxCLN540kb-0phwxSRf64c7iuPi"
+        allowfullscreen>
+      </iframe>
+    </div>
   </section>
 
 </main>
 
 <footer>
-  LVL5 Squad © 2026
+  LVL5 Squad © <span id="y"></span>
 </footer>
 
 <script src="/assets/js/script.js"></script>

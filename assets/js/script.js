@@ -238,3 +238,87 @@ if (SIMULATE_LIVE && viewerEl) {
 if (SIMULATE_LIVE) {
   document.body.classList.add('go-live');
 }
+
+// ==============================
+// Navbar dinámico al scrollear
+// ==============================
+
+const navbar = document.querySelector('.navbar');
+let lastScrollY = window.scrollY;
+let ticking = false;
+
+function onScroll() {
+  const currentScroll = window.scrollY;
+
+  if (currentScroll > lastScrollY && currentScroll > 80) {
+    // Bajando → ocultar
+    navbar.classList.add('nav-hidden');
+    navbar.classList.remove('nav-visible');
+  } else {
+    // Subiendo → mostrar
+    navbar.classList.remove('nav-hidden');
+    navbar.classList.add('nav-visible');
+  }
+
+  lastScrollY = currentScroll;
+  ticking = false;
+}
+
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    window.requestAnimationFrame(onScroll);
+    ticking = true;
+  }
+});
+
+// ==============================
+// Chat embebido colapsable
+// ==============================
+
+const chatToggle = document.getElementById('chatToggle');
+const chatPanel  = document.getElementById('chatPanel');
+const chatClose  = document.getElementById('chatClose');
+
+chatToggle.addEventListener('click', () => {
+  chatPanel.classList.add('open');
+});
+
+chatClose.addEventListener('click', () => {
+  chatPanel.classList.remove('open');
+});
+
+// ==============================
+// Cuenta regresiva evento
+// ==============================
+
+// Fecha del sorteo (Argentina GMT-3)
+const eventDate = new Date("2026-01-31T21:00:00-03:00").getTime();
+
+const d = document.getElementById("cdDays");
+const h = document.getElementById("cdHours");
+const m = document.getElementById("cdMinutes");
+const s = document.getElementById("cdSeconds");
+
+function updateCountdown(){
+  const now = Date.now();
+  const diff = eventDate - now;
+
+  if(diff <= 0){
+    document.getElementById("countdown").innerHTML =
+      "<strong>¡ES AHORA!</strong>";
+    return;
+  }
+
+  const days    = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours   = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  d.textContent = days;
+  h.textContent = hours;
+  m.textContent = minutes;
+  s.textContent = seconds;
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
