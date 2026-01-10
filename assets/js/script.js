@@ -2,7 +2,6 @@
 // UTILIDADES GENERALES
 // =====================================================
 
-// Año automático
 const yearEl = document.getElementById('y');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
@@ -15,24 +14,46 @@ const POLL_MS = 60_000;
 const DEFAULT_CHANNEL = 'lvl5squad';
 
 // ⚠️ SOLO PARA DESARROLLO VISUAL
-// Cuando Twitch esté activo en serio → false
 const SIMULATE_LIVE = true;
+
+// =====================================================
+// FECHAS IMPORTANTES (UNA FUENTE CADA COSA)
+// =====================================================
+
+// 🎥 Próximo stream (PRE-LIVE)
+const NEXT_STREAM_DATE = new Date("2026-01-31T21:00:00-03:00").getTime();
+const PRELIVE_MINUTES = 30;
+
+// 🎁 Sorteo
+const EVENT_DATE = new Date("2026-01-31T21:00:00-03:00").getTime();
 
 // =====================================================
 // ESTADO VISUAL CENTRALIZADO (CLAVE)
 // =====================================================
 
-function setLiveVisualState(isLive){
-  document.body.classList.toggle('is-live', isLive);
-}
+function setStreamState(state) {
+  document.body.classList.remove('is-live', 'is-prelive');
 
-// Decide quién manda la estética
-function resolveVisualLiveState(realLive){
-  return SIMULATE_LIVE ? true : realLive;
+  if (state === 'live') document.body.classList.add('is-live');
+  if (state === 'prelive') document.body.classList.add('is-prelive');
 }
 
 // =====================================================
-// TWITCH LIVE STATUS (REAL)
+// PRE-LIVE AUTOMÁTICO (STREAM)
+// =====================================================
+
+function updatePreLiveState() {
+  if (document.body.classList.contains('is-live')) return;
+
+  const diff = NEXT_STREAM_DATE - Date.now();
+
+  if (diff > 0 && diff <= PRELIVE_MINUTES * 60 * 1000) {
+    setStreamState('prelive');
+  }
+}
+
+// =====================================================
+// TWITCH LIVE STATUS
 // =====================================================
 
 async function updateLiveUI() {
@@ -51,34 +72,30 @@ async function updateLiveUI() {
 
     if (twitchBtn) twitchBtn.href = `https://twitch.tv/${channel}`;
 
-    // 🎨 Estado visual seguro
-    const visualLive = resolveVisualLiveState(live);
-    setLiveVisualState(visualLive);
-
     if (live) {
+      setStreamState('live');
+
       livePill.textContent = '🔴 EN VIVO AHORA';
       livePill.classList.add('live');
       liveCard.classList.add('is-live');
       liveNote.textContent = '¡Entrá al stream!';
       viewerEl.textContent = viewers ?? 0;
+
       autoOpenChatIfLive(true);
     } else {
+      updatePreLiveState();
+
       livePill.textContent = 'Offline';
       livePill.classList.remove('live');
       liveCard.classList.remove('is-live');
       liveNote.textContent = 'Seguinos en Twitch y activá notificaciones.';
       viewerEl.textContent = 0;
-      autoOpenChatIfLive(false);
     }
 
-  } catch (err) {
-    // =================================================
-    // FALLBACK VISUAL (NO ROMPE ESTÉTICA)
-    // =================================================
+  } catch {
     if (!SIMULATE_LIVE) return;
 
-    setLiveVisualState(true);
-
+    setStreamState('live');
     livePill.textContent = '🔴 EN VIVO AHORA';
     livePill.classList.add('live');
     liveCard.classList.add('is-live');
@@ -87,124 +104,57 @@ async function updateLiveUI() {
   }
 }
 
-// Primera carga + polling
 updateLiveUI();
 setInterval(updateLiveUI, POLL_MS);
 
 // =====================================================
-// TRANSICIÓN GO LIVE (SOLO VISUAL)
+// PRE-LIVE BADGE (ARRIBA)
 // =====================================================
 
-if (SIMULATE_LIVE) {
-  setLiveVisualState(true);
-  document.body.classList.add('go-live');
-}
+const preliveBadge = document.getElementById('preliveBadge');
 
-// =====================================================
-// AUDIO AMBIENTE LIVE
-// =====================================================
+function updatePreliveBadge() {
+  if (!preliveBadge) return;
 
-const audio = document.getElementById('liveSound');
-if (SIMULATE_LIVE && audio) {
-  document.addEventListener('click', () => {
-    audio.volume = 0.25;
-    audio.play();
-  }, { once:true });
-}
+  const diff = NEXT_STREAM_DATE - Date.now();
 
-// =====================================================
-// VIEWERS FAKE (SOLO SIMULACIÓN)
-// =====================================================
-
-if (SIMULATE_LIVE) {
-  const viewerEl = document.querySelector('#viewerCount span');
-  let viewers = Math.floor(Math.random() * 200) + 50;
-  viewerEl.textContent = viewers;
-
-  setInterval(() => {
-    viewers += Math.floor(Math.random() * 5 - 2);
-    if (viewers < 20) viewers = 20;
-    viewerEl.textContent = viewers;
-  }, 3000);
-}
-
-// =====================================================
-// NAVBAR HIDE / SHOW AL SCROLL
-// =====================================================
-
-const navbar = document.querySelector('.navbar');
-let lastScrollY = window.scrollY;
-
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-
-  if (y > lastScrollY && y > 80) {
-    navbar.classList.add('nav-hidden');
-  } else {
-    navbar.classList.remove('nav-hidden');
+  if (
+    diff <= 0 ||
+    document.body.classList.contains('is-live') ||
+    diff > PRELIVE_MINUTES * 60 * 1000
+  ) {
+    preliveBadge.style.display = 'none';
+    return;
   }
 
-  lastScrollY = y;
-});
+  preliveBadge.style.display = 'inline-flex';
 
-// =====================================================
-// BANNER PARALLAX (SUAVE)
-// =====================================================
-
-const banner = document.querySelector('.header-banner');
-if (banner && window.innerWidth > 768) {
-  window.addEventListener('scroll', () => {
-    banner.style.transform = `translateY(${window.scrollY * 0.08}px)`;
-  });
+  const minutes = Math.ceil(diff / 60000);
+  preliveBadge.textContent =
+    minutes <= 1
+      ? '🔥 ARRANCA AHORA'
+      : `⏳ ARRANCA EN ${minutes} MIN`;
 }
 
-// =====================================================
-// CHAT EMBEBIDO COLAPSABLE
-// =====================================================
-
-const chatToggle = document.getElementById('chatToggle');
-const chatPanel  = document.getElementById('chatPanel');
-const chatClose  = document.getElementById('chatClose');
-
-chatToggle?.addEventListener('click', () => {
-  chatPanel.classList.add('open');
-});
-
-chatClose?.addEventListener('click', () => {
-  chatPanel.classList.remove('open');
-});
+updatePreliveBadge();
+setInterval(updatePreliveBadge, 30_000);
 
 // =====================================================
-// AUTO-OPEN DEL CHAT CUANDO ESTÁ EN VIVO
+// CUENTA REGRESIVA DEL SORTEO (INDEPENDIENTE)
 // =====================================================
 
-function autoOpenChatIfLive(isLive){
-  if (!isLive) return;
-  if (sessionStorage.getItem('chatOpened')) return;
-
-  setTimeout(() => {
-    chatPanel?.classList.add('open');
-    sessionStorage.setItem('chatOpened', '1');
-  }, 1200);
-}
-
-// =====================================================
-// CUENTA REGRESIVA EVENTO
-// =====================================================
-
-const eventDate = new Date("2026-01-31T21:00:00-03:00").getTime();
 const d = document.getElementById("cdDays");
 const h = document.getElementById("cdHours");
 const m = document.getElementById("cdMinutes");
 const s = document.getElementById("cdSeconds");
 const eventAlert = document.getElementById("eventAlert");
 
-function updateCountdown(){
-  const diff = eventDate - Date.now();
+function updateCountdown() {
+  const diff = EVENT_DATE - Date.now();
 
   if (diff <= 0) {
     document.getElementById("countdown").innerHTML = "<strong>¡ES AHORA!</strong>";
-    eventAlert.classList.add("urgent");
+    eventAlert?.classList.add("urgent");
     return;
   }
 
@@ -213,28 +163,24 @@ function updateCountdown(){
   m.textContent = Math.floor(diff / 60000) % 60;
   s.textContent = Math.floor(diff / 1000) % 60;
 
-  eventAlert.classList.toggle("urgent", diff <= 10 * 60 * 1000);
+  eventAlert?.classList.toggle("urgent", diff <= 10 * 60 * 1000);
 }
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
 // =====================================================
-// MODO HORARIO AUTOMÁTICO (AMBIENTE)
+// CHAT AUTO-OPEN
 // =====================================================
 
-function setTimeMode(){
-  const hour = new Date().getHours();
-  document.body.classList.remove('time-day', 'time-night', 'time-late');
+const chatPanel = document.getElementById('chatPanel');
 
-  if (hour >= 7 && hour < 19) {
-    document.body.classList.add('time-day');
-  } else if (hour >= 19 && hour < 24) {
-    document.body.classList.add('time-night');
-  } else {
-    document.body.classList.add('time-late');
-  }
+function autoOpenChatIfLive(isLive) {
+  if (!isLive) return;
+  if (sessionStorage.getItem('chatOpened')) return;
+
+  setTimeout(() => {
+    chatPanel?.classList.add('open');
+    sessionStorage.setItem('chatOpened', '1');
+  }, 1200);
 }
-
-setTimeMode();
-setInterval(setTimeMode, 10 * 60 * 1000);
